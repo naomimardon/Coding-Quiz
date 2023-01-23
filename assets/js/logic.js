@@ -45,6 +45,7 @@ function checkAnswer(answer) {
         console.log(questions[runningQuestionIndex].correct);
         isCorrect = false;
         feedback.textContent = "Wrong!";
+        timerCount -= 10;
     } 
 }
 
@@ -111,14 +112,22 @@ if (isCorrect) {
     answerIsCorrect();
 }
 
+function renderScore() {
+    finalScore.textContent = score;
+    timeLeft.textContent = 0;
+}
 function startTimer() { //add in condition to stop timer and function to call final score
     timer = setInterval(function() {
         timerCount--;
         timeLeft.textContent = timerCount;
         if (timerCount >= 0) {
         }
-        if (timerCount === 0) {
+        if (timerCount <= 0) {
             clearInterval(timer);
+            hideSection(questionsScreen);
+            hideSection(feedback);
+            openSection(endScreen);
+            renderScore();
         }
     }, 1000); 
 }
