@@ -2,8 +2,6 @@ let timeLeft = document.querySelector("#time")
 let startScreen = document.querySelector("#start-screen");
 let startButton = document.querySelector("#start");
 let questionsScreen = document.querySelector("#questions");
-let questionTitle = document.querySelector("#question-title");
-let choices = document.querySelector(".choices");
 let endScreen = document.querySelector("#end-screen");
 let finalScore = document.querySelector("#final-score");
 let initials = document.querySelector("#initials");
@@ -27,7 +25,6 @@ function startTimer() { //add in condition to stop timer and function to call fi
     timer = setInterval(function() {
         timerCount--;
         timeLeft.textContent = timerCount;
-        console.log(timerCount);
         if (timerCount === 0) {
             clearInterval(timer);
         }
@@ -38,6 +35,7 @@ function startQuiz () {
     timerCount = 75; 
     hideSection(startScreen);
     openSection(questionsScreen);
+    renderQuestions();
     startTimer()
 }
 
