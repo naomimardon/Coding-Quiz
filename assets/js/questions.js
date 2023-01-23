@@ -41,45 +41,5 @@ let questions = [
     },
 ]
 
-let questionTitle = document.querySelector("#question-title");
-let choices = document.querySelector(".choices");
-
-function checkAnswer() {
-    return;
-}
-
-let choiceA = document.createElement("button");
-choiceA.addEventListener("click", checkAnswer("A"));
-choiceA.id = "A";
-
-let choiceB = document.createElement("button");
-choiceB.addEventListener("click", checkAnswer("B"));
-choiceB.id = "B";
-
-let choiceC = document.createElement("button");
-choiceC.addEventListener("click", checkAnswer("C"));
-choiceC.id = "C";
-
-let choiceD = document.createElement("button");
-choiceD.addEventListener("click", checkAnswer("D"));
-choiceD.id = "D";
-
-choices.appendChild(choiceA);
-choices.appendChild(choiceB);
-choices.appendChild(choiceC);
-choices.appendChild(choiceD);
-
-let lastQuestionIndex = questions.length - 1;
-let runningQuestionIndex = 0;
-
-function renderQuestions() {
-    let currentQuestion = questions[runningQuestionIndex];
-    questionTitle.textContent = currentQuestion.question;
-    choiceA.textContent = currentQuestion.choiceA;
-    choiceB.textContent = currentQuestion.choiceB;
-    choiceC.textContent = currentQuestion.choiceC;
-    choiceD.textContent = currentQuestion.choiceD;
-}
-
 
 

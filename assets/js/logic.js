@@ -2,12 +2,21 @@ let timeLeft = document.querySelector("#time")
 let startScreen = document.querySelector("#start-screen");
 let startButton = document.querySelector("#start");
 let questionsScreen = document.querySelector("#questions");
+let questionTitle = document.querySelector("#question-title");
+let choices = document.querySelector(".choices");
 let endScreen = document.querySelector("#end-screen");
 let finalScore = document.querySelector("#final-score");
 let initials = document.querySelector("#initials");
 let submitButton = document.querySelector("#submit");
-let feedback = document.querySelector("feedback");
+let feedback = document.querySelector(".feedback");
 
+let lastQuestionIndex = questions.length - 1;
+let runningQuestionIndex = 0;
+let isCorrect = false;
+
+finalScore.textContent = 0;
+let score = parseInt(finalScore.textContent);
+console.log(score);
 
 //hide an element
 function hideSection(element) {
@@ -21,10 +30,93 @@ function openSection(element) {
     element.classList.add("start")
 }
 
+function checkAnswer(answer) {
+   if (questions[runningQuestionIndex].correct === answer) {
+        console.log(answer);
+        console.log(questions[runningQuestionIndex].correct);
+        isCorrect = true;
+        feedback.textContent = "Correct!";
+        score += 5;
+        console.log(score);
+        runningQuestionIndex++
+        renderQuestions();
+    } else {
+        console.log(answer);
+        console.log(questions[runningQuestionIndex].correct);
+        isCorrect = false;
+        feedback.textContent = "Wrong!";
+    } 
+}
+
+let choiceA = document.createElement("button");
+choiceA.addEventListener("click", function(event) {
+    checkAnswer("A")
+});
+choiceA.id = "A";
+
+let choiceB = document.createElement("button");
+choiceB.addEventListener("click", function(event) {
+    checkAnswer("B")
+});
+choiceB.id = "B";
+
+let choiceC = document.createElement("button");
+choiceC.addEventListener("click", function(event) {
+    checkAnswer("C")
+});
+choiceC.id = "C";
+
+let choiceD = document.createElement("button");
+choiceD.addEventListener("click", function(event) {
+    checkAnswer("D")
+ });
+choiceD.id = "D";
+
+choices.appendChild(choiceA);
+choices.appendChild(choiceB);
+choices.appendChild(choiceC);
+choices.appendChild(choiceD);
+
+function renderQuestions() {
+    if (runningQuestionIndex > lastQuestionIndex) {
+        return;
+    } else {
+    let currentQuestion = questions[runningQuestionIndex];
+    questionTitle.textContent = currentQuestion.question;
+    choiceA.textContent = currentQuestion.choiceA;
+    choiceB.textContent = currentQuestion.choiceB;
+    choiceC.textContent = currentQuestion.choiceC;
+    choiceD.textContent = currentQuestion.choiceD;
+    }
+}
+
+function renderFeedback() {
+    for (let runningQuestionIndex = 0; runningQuestionIndex <= lastQuestionIndex; runningQuestionIndex++) {
+        openSection(feedback);
+    }
+}
+
+function answerIsCorrect() {
+    feedback.textContent = "Correct!";
+
+    console.log(feedback.textContent);
+    }
+
+function answerIsWrong() {
+    feedback.textContent = "Wrong!";
+    console.log(feedback.textContent);
+}
+
+if (isCorrect) {
+    answerIsCorrect();
+}
+
 function startTimer() { //add in condition to stop timer and function to call final score
     timer = setInterval(function() {
         timerCount--;
         timeLeft.textContent = timerCount;
+        if (timerCount >= 0) {
+        }
         if (timerCount === 0) {
             clearInterval(timer);
         }
@@ -34,9 +126,10 @@ function startTimer() { //add in condition to stop timer and function to call fi
 function startQuiz () {
     timerCount = 75; 
     hideSection(startScreen);
-    openSection(questionsScreen);
     renderQuestions();
-    startTimer()
+    openSection(questionsScreen);
+    openSection(feedback);
+    startTimer();
 }
 
 //Event listener on Start Quiz button to start the quiz
