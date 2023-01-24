@@ -163,7 +163,6 @@ startButton.addEventListener("click", startQuiz);
     localStorage.setItem("scoresArray", JSON.stringify(scoresArray))
  }
 
-
 submitButton.addEventListener("click", function(event) {
     if (initials.value == "") {
         return;
