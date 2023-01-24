@@ -148,7 +148,7 @@ function startTimer() {
 }
 
 function startQuiz () {
-    timerCount = 75; 
+    timerCount = 60; 
     hideSection(startScreen);
     renderQuestions();
     openSection(questionsScreen);
