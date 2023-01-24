@@ -10,6 +10,9 @@ let initials = document.querySelector("#initials");
 let submitButton = document.querySelector("#submit");
 let feedback = document.querySelector(".feedback");
 
+let correctAudio = new Audio("./assets/sfx/correct.wav");
+let wrongAudio = new Audio("./assets/sfx/incorrect.wav");
+
 let lastQuestionIndex = questions.length - 1;
 let runningQuestionIndex = 0;
 let isCorrect = false;
@@ -36,6 +39,7 @@ function checkAnswer(answer) {
         console.log(questions[runningQuestionIndex].correct);
         isCorrect = true;
         feedback.textContent = "Correct!";
+        correctAudio.play();
         score += 5;
         console.log(score);
         runningQuestionIndex++
@@ -45,6 +49,7 @@ function checkAnswer(answer) {
         console.log(questions[runningQuestionIndex].correct);
         isCorrect = false;
         feedback.textContent = "Wrong!";
+        wrongAudio.play();
         timerCount -= 10;
     } 
 }
@@ -114,9 +119,9 @@ if (isCorrect) {
 
 function renderScore() {
     finalScore.textContent = score;
-    timerCount = 0;
+    timeLeft.textContent = 0;
 }
-function startTimer() { //add in condition to stop timer and function to call final score
+function startTimer() { 
     timer = setInterval(function() {
         timerCount--;
         timeLeft.textContent = timerCount;
