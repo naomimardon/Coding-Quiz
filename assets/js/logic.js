@@ -21,12 +21,12 @@ finalScore.textContent = 0;
 let score = parseInt(finalScore.textContent);
 console.log(score);
 
-let highscores = [];
+let scoresArray = [];
 
 function init() {
-    const storedHighscores = JSON.parse(localStorage.getItem("highscores"));
-    if (storedHighscores !== null) {
-        highscores = storedHighscores;
+    const storedScoresArray = JSON.parse(localStorage.getItem("scoresArray"));
+    if (storedScoresArray !== null) {
+        scoresArray = storedScoresArray;
     }
 }
 
@@ -159,8 +159,8 @@ function startQuiz () {
 //Event listener on Start Quiz button to start the quiz
 startButton.addEventListener("click", startQuiz);
 
- function storeHighscores () {
-    localStorage.setItem("highscores", JSON.stringify(highscores))
+ function storeScoresArray () {
+    localStorage.setItem("scoresArray", JSON.stringify(scoresArray))
  }
 
 
@@ -170,8 +170,8 @@ submitButton.addEventListener("click", function(event) {
     } 
     let scoreSubmission = [initials.value, score];
     console.log(scoreSubmission);
-    highscores.push(scoreSubmission);
-    storeHighscores();
+    scoresArray.push(scoreSubmission);
+    storeScoresArray();
 });
 
 init();
