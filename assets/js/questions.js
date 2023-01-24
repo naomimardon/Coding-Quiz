@@ -1,3 +1,5 @@
+//array of questions to be asked in the quiz
+
 let questions = [
     {
         question: "Commonly used data types DO NOT include:",

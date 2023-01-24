@@ -1,3 +1,4 @@
+//query selectors
 let timeLeft = document.querySelector("#time")
 let startScreen = document.querySelector("#start-screen");
 let startButton = document.querySelector("#start");
@@ -10,19 +11,24 @@ let initials = document.querySelector("#initials");
 let submitButton = document.querySelector("#submit");
 let feedback = document.querySelector(".feedback");
 
+//relative paths to audio files for correct and incorrect sounds
 let correctAudio = new Audio("./assets/sfx/correct.wav");
 let wrongAudio = new Audio("./assets/sfx/incorrect.wav");
 
+//initial variables needed to check when the quiz runs out of questions, and assume the answer is incorrect before the question is answered
 let lastQuestionIndex = questions.length - 1;
 let runningQuestionIndex = 0;
 let isCorrect = false;
 
+//initial variables to help calculate the score
 finalScore.textContent = 0;
 let score = parseInt(finalScore.textContent);
 console.log(score);
 
+//empty array to score the initials and score of each user
 let scoresArray = [];
 
+//retrieve previous stores from local storage
 function init() {
     const storedScoresArray = JSON.parse(localStorage.getItem("scoresArray"));
     if (storedScoresArray !== null) {
@@ -42,6 +48,7 @@ function openSection(element) {
     element.classList.add("start")
 }
 
+//if the answer is correct, add 5 points to the score, play the 'correct' sound and move to the next question
 function checkAnswer(answer) {
    if (questions[runningQuestionIndex].correct === answer) {
         console.log("Choice: " + answer);
@@ -54,6 +61,7 @@ function checkAnswer(answer) {
         console.log("Score: " + score);
         runningQuestionIndex++
         renderQuestions();
+//if the answer is incorrect, reduce the time by 10 seconds and play the 'incorrect' sound, but remain on the same question
     } else {
         console.log("Choice: " + answer);
         console.log("Correct Answer: " + questions[runningQuestionIndex].correct);
@@ -65,6 +73,7 @@ function checkAnswer(answer) {
     } 
 }
 
+//create four list items for the answer choices and append to the div with the class of choices
 let choiceA = document.createElement("button");
 choiceA.addEventListener("click", function(event) {
     checkAnswer("A")
@@ -94,6 +103,7 @@ choices.appendChild(choiceB);
 choices.appendChild(choiceC);
 choices.appendChild(choiceD);
 
+//display a question on screen until there are no more questions left
 function renderQuestions() {
     if (runningQuestionIndex > lastQuestionIndex) {
         return;
@@ -107,30 +117,21 @@ function renderQuestions() {
     }
 }
 
+//keep the feedback section open until there are no more questions
 function renderFeedback() {
     for (let runningQuestionIndex = 0; runningQuestionIndex <= lastQuestionIndex; runningQuestionIndex++) {
         openSection(feedback);
     }
 }
 
-// function answerIsCorrect() {
-//     feedback.textContent = "Correct!";
-//     }
-
-// function answerIsWrong() {
-//     feedback.textContent = "Wrong!";
-// }
-
-// if (isCorrect) {
-//     answerIsCorrect();
-// }
-
+//display the final score on the end screen
 function renderScore() {
     finalScore.textContent = score;
     timeLeft.textContent = 0;
     console.log("Final Score: " + score);
 }
 
+//start the timer and clear it if the counter gets to zero or there are no more questions
 function startTimer() { 
     timer = setInterval(function() {
         timerCount--;
@@ -147,6 +148,7 @@ function startTimer() {
     }, 1000); 
 }
 
+//function to start the quiz
 function startQuiz () {
     timerCount = 60; 
     hideSection(startScreen);
@@ -159,12 +161,15 @@ function startQuiz () {
 //Event listener on Start Quiz button to start the quiz
 startButton.addEventListener("click", startQuiz);
 
+//store all scores and corresponding initials in the local storage
  function storeScoresArray () {
     localStorage.setItem("scoresArray", JSON.stringify(scoresArray))
  }
 
+//when a user's initials are submitted, add them and the corresponding score to the scores array and update the local storage
+//if the user doesn't enter initials, nothing is stored
 submitButton.addEventListener("click", function(event) {
-    if (initials.value == "") {
+    if (initials.value === "") {
         return;
     } 
     let scoreSubmission = [initials.value, score];
