@@ -114,7 +114,7 @@ if (isCorrect) {
 
 function renderScore() {
     finalScore.textContent = score;
-    timeLeft.textContent = 0;
+    timerCount = 0;
 }
 function startTimer() { //add in condition to stop timer and function to call final score
     timer = setInterval(function() {
@@ -122,7 +122,7 @@ function startTimer() { //add in condition to stop timer and function to call fi
         timeLeft.textContent = timerCount;
         if (timerCount >= 0) {
         }
-        if (timerCount <= 0) {
+        if (timerCount <= 0 || runningQuestionIndex > lastQuestionIndex) {
             clearInterval(timer);
             hideSection(questionsScreen);
             hideSection(feedback);
