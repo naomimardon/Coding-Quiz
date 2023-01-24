@@ -21,6 +21,15 @@ finalScore.textContent = 0;
 let score = parseInt(finalScore.textContent);
 console.log(score);
 
+let highscores = [];
+
+function init() {
+    const storedHighscores = JSON.parse(localStorage.getItem("highscores"));
+    if (storedHighscores !== null) {
+        highscores = storedHighscores;
+    }
+}
+
 //hide an element
 function hideSection(element) {
     element.classList.remove("start");
@@ -35,20 +44,22 @@ function openSection(element) {
 
 function checkAnswer(answer) {
    if (questions[runningQuestionIndex].correct === answer) {
-        console.log(answer);
-        console.log(questions[runningQuestionIndex].correct);
+        console.log("Choice: " + answer);
+        console.log("Correct Answer: " + questions[runningQuestionIndex].correct);
         isCorrect = true;
         feedback.textContent = "Correct!";
+        console.log(feedback.textContent);
         correctAudio.play();
         score += 5;
-        console.log(score);
+        console.log("Score: " + score);
         runningQuestionIndex++
         renderQuestions();
     } else {
-        console.log(answer);
-        console.log(questions[runningQuestionIndex].correct);
+        console.log("Choice: " + answer);
+        console.log("Correct Answer: " + questions[runningQuestionIndex].correct);
         isCorrect = false;
         feedback.textContent = "Wrong!";
+        console.log(feedback.textContent);
         wrongAudio.play();
         timerCount -= 10;
     } 
@@ -102,25 +113,24 @@ function renderFeedback() {
     }
 }
 
-function answerIsCorrect() {
-    feedback.textContent = "Correct!";
+// function answerIsCorrect() {
+//     feedback.textContent = "Correct!";
+//     }
 
-    console.log(feedback.textContent);
-    }
+// function answerIsWrong() {
+//     feedback.textContent = "Wrong!";
+// }
 
-function answerIsWrong() {
-    feedback.textContent = "Wrong!";
-    console.log(feedback.textContent);
-}
-
-if (isCorrect) {
-    answerIsCorrect();
-}
+// if (isCorrect) {
+//     answerIsCorrect();
+// }
 
 function renderScore() {
     finalScore.textContent = score;
     timeLeft.textContent = 0;
+    console.log("Final Score: " + score);
 }
+
 function startTimer() { 
     timer = setInterval(function() {
         timerCount--;
@@ -148,3 +158,23 @@ function startQuiz () {
 
 //Event listener on Start Quiz button to start the quiz
 startButton.addEventListener("click", startQuiz);
+
+ function storeHighscores () {
+    localStorage.setItem("highscores", JSON.stringify(highscores))
+ }
+
+
+submitButton.addEventListener("click", function(event) {
+    if (initials.value == "") {
+        return;
+    } 
+    let scoreSubmission = [initials.value, score];
+    console.log(scoreSubmission);
+    highscores.push(scoreSubmission);
+    storeHighscores();
+});
+
+init();
+
+
+
